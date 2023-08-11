@@ -1,0 +1,40 @@
+{% extends 'admin/model/list.html' %}
+
+{% block head %}
+  {{ super() }}
+  <link href="{{ admin_static.url(filename='vendor/leaflet/leaflet.css', v='1.0.2') }}" rel="stylesheet">
+{% endblock %}
+
+
+
+{% block model_list_table %}
+    <div class="row">
+        <div class="col-8">
+            {{super()}}
+        </div>
+        <div class="col-4 map">
+            <div id="map" style="height: 80vh;">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block tail %}
+<script>
+    window.DEFAULT_CENTER_LAT = "{{ config.DEFAULT_CENTER_LAT }}";
+    window.DEFAULT_CENTER_LONG = "{{ config.DEFAULT_CENTER_LONG }}";
+    window.TILE_LAYER_URL = "{{ config.FLASK_ADMIN_TILE_LAYER_URL }}";
+    window.TILE_LAYER_ATTRIBUTION = "{{ config.FLASK_ADMIN_TILE_LAYER_ATTRIBUTION }}";
+    var geojson_data = {{ geojson_data | tojson }};
+
+    // console.log(geojson_data)
+    
+
+
+</script>
+<script src="{{ admin_static.url(filename='vendor/leaflet/leaflet.js', v='1.0.2') }}"></script>
+<script src="{{ admin_static.url(filename='admin/js/map_utils.js') }}"></script>
+<script src="{{ admin_static.url(filename='admin/js/map_list.js') }}"></script>
+
+
+{% endblock %}
